@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+   "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
+    "heroku-postbuild": "ng build --prod",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -26,6 +27,7 @@
     "angular-popper": "^2.0.1",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
+    "express": "^4.17.1",
     "cors": "^2.8.5",
     "exceljs": "^1.12.0",
     "file-saver": "^2.0.2",
