@@ -1,0 +1,73 @@
+<div class="card border-primary mb-3">
+    <div class="card-header" style="text-align: center; text-transform: uppercase;"> Listado de productos</div>
+    <div class="card-body text-primary">
+
+      <div class="my-2 text-left">
+        <form class="form-inline"  #productoForm="ngForm" style="float: right;">
+
+
+                <a class="" style="cursor: pointer;"><img src="assets/img/saveProduct.png"
+                  (click)='createProduct()'  routerLink="form"
+                  title="Agregar" style="height: 40px;cursor: pointer;" /></a>
+          </form>
+      </div>
+      <div *ngIf="collection.data?.length == 0" class="alert alert-info" style="    margin-top: 50px;">
+        No hay registros!
+      </div>
+      <table class="table table-bordered table-striped" *ngIf="collection.data?.length>0" >
+        <thead style="text-align: center;">
+          <tr>
+            <th>sku</th>
+            <th>descripcion</th>
+            <th>precio</th>
+            <th>fechaCreacion</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let colProducto of collection.data | paginate: config ">
+            <td>{{ colProducto.sku }}</td>
+            <td>{{ colProducto.descripcion }}</td>
+            <td>{{ colProducto.precio |currency:"MXN":"symbol"}}</td>
+            <td>{{ colProducto.fechaCreacion   | date: 'medium'}}</td>
+
+            <td>
+              <a class="" style="cursor: pointer;"><img src="assets/img/editarProduct.png"
+                routerLink="form"
+                  (click)='editProduct(colProducto.sku)' title="Editar" style="height: 50px;" /></a>
+            </td>
+            <td>
+              <a class="" style="cursor: pointer;"><img src="assets/img/deleteProduct.jpg"
+                  (click)='deleteProduct(colProducto.sku)' title="Eliminar" style="height: 50px;" /></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!--Inicia la paginacion-->
+      <pagination-template #p="paginationApi"  (pageChange)="config.currentPage = $event" *ngIf="collection.data?.length >0">
+
+
+        <div class="custom-pagination">
+          <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+            <span *ngIf="!p.isFirstPage()" (click)="p.previous()">
+              <
+                </span>
+            </div>
+            <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                  <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value" style="width: 35px;">{{ page.label }}</span>
+                <div *ngIf="p.getCurrent() === page.value">
+                  <span style="width: 35px;">{{ page.label }}</span>
+                </div>
+            </div>
+            <div class="pagination-next" [class.disabled]="p.isLastPage()">
+              <span *ngIf="!p.isLastPage()" (click)="p.next()"> > </span>
+            </div>
+        </div>
+
+      </pagination-template>
+   <!--Termina la paginacion-->
+    </div>
+  </div>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]=""></ngx-loading>

@@ -1,0 +1,117 @@
+
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card  border-primary" >
+  <div class="card-header" style="text-align: left;"> <img src="assets/img/return.png"   routerLink="plazo" width="25px;" style="cursor: pointer;" title="Regresar"  (click)="regresar()"> <label> {{ titulo }}</label></div>
+  <div class="card-body">
+    <form #notificaForm="ngForm">
+    <div class="form-group row">
+
+
+      <label for="periodo" class="col-form-label col-sm-2">Periodo</label>
+      <div class="col-sm-6">
+        <select [(ngModel)]="plazoModel.periodoId"  required class="form-control" name="periodo" #periodo="ngModel"
+         >
+          <option *ngFor="let dato of listaPeriodo" value="{{dato.id}}">
+            {{dato.descripcion}}
+          </option>
+
+        </select>
+        <div class="alert alert-danger" *ngIf="periodo.invalid && (periodo.dirty || periodo.touched)" >
+          <div *ngIf="periodo.errors.required">
+            El periodo es requerido
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="producto" class="col-form-label col-sm-2">Productos</label>
+      <div class="col-sm-6">
+        <select [(ngModel)]="plazoModel.productoId"  required class="form-control"
+         name="producto" #producto="ngModel"  >
+          <option *ngFor="let dato of listaProduct " value="{{dato.id}}">
+            {{dato.descripcion}}
+          </option>
+
+        </select>
+        <div class="alert alert-danger" *ngIf="producto.invalid && (producto.dirty || producto.touched)" >
+          <div *ngIf="producto.errors.required">
+            El producto  es requerido
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <div class="form-group row">
+        <label for="plazo" class="col-form-label col-sm-2">Plazo</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="plazoModel.numPlazo" name="plazo"
+           autocomplete="off" #plazo="ngModel"
+           required disabled="{{isDetails}}" minlength="1" placeholder="plazo" >
+          <div class="alert alert-danger" *ngIf="plazo.invalid && (plazo.dirty || plazo.touched)" >
+            <div *ngIf="plazo.errors.required">
+              Plazo es requerido
+            </div>
+            <div *ngIf="plazo.errors.minlength">
+              Plazo debe tener al menos 1 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="form-group row">
+          <label for="tasaNormal" class="col-form-label col-sm-2">Tasa Normal</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="plazoModel.tasaNormal" name="tasaNormal"
+             autocomplete="off" #tasaNormal="ngModel"
+             required disabled="{{isDetails}}" minlength="1" placeholder="Tasa Normal" >
+            <div class="alert alert-danger" *ngIf="tasaNormal.invalid && (tasaNormal.dirty || tasaNormal.touched)" >
+              <div *ngIf="tasaNormal.errors.required">
+                Tasa Normal es requerido
+              </div>
+              <div *ngIf="plazo.errors.minlength">
+                Tasa Normal debe tener al menos 1 caracteres
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="tasaPuntual" class="col-form-label col-sm-2">Tasa Puntual</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="plazoModel.tasaPuntual" name="tasaPuntual"
+             autocomplete="off" #tasaPuntual="ngModel"
+             required disabled="{{isDetails}}" minlength="1" placeholder="Tasa Puntual" >
+            <div class="alert alert-danger" *ngIf="tasaPuntual.invalid && (tasaPuntual.dirty || tasaPuntual.touched)" >
+              <div *ngIf="tasaPuntual.errors.required">
+                Tasa Puntual es requerido
+              </div>
+              <div *ngIf="plazo.errors.minlength">
+                Tasa Puntual debe tener al menos 1 caracteres
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!plazoModel.id else elseBlock" [disabled]="!notificaForm.form.valid">Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" *ngIf="!isDetails" (click)='update()' [disabled]="!notificaForm.form.valid">Editar</button>
+          </ng-template>
+
+
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]=""></ngx-loading>

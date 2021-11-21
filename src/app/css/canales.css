@@ -1,0 +1,63 @@
+.custom-pagination .page-number{
+    display: inline-block;
+    /* padding: 5px 12px; */
+    background: #ffffff;
+    margin: 0px 4px;
+    border-radius: 5px;
+    text-align: center;
+    color: black;
+  }
+  
+  .page-number.current{
+    background: #046240 !important;
+    border: 2px solid #458873;
+    color: #046240;
+  }
+  
+  .page-number span{
+    display: block;
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .pagination-previous,.pagination-next{
+    display: inline-block;
+    font-weight: bold;
+  }
+  .card-header {
+    text-align: center;
+      color: #fff;
+      background-color: #046240;
+      text-transform: uppercase;
+  }
+  .bordeRojo{
+    border-color: #cb192c;
+}
+.btn-baz{
+  color: #fff;
+  background-color: #156c4c;
+  border-color: #007bff;
+}
+.btn-baz:checked{
+  color: #fff;
+  background-color: #52b38f;
+  border-color: #007bff;
+}
+
+.btn-baz:hover{
+  color: #fff;
+  background-color: #52b38f;
+  border-color: #007bff;
+}
+
+.btn-baz:active{
+  color: #fff;
+  background-color: #00eb95 !important;
+  border-color: #007bff;
+}
+
+.borderRed{
+  border: 1px solid #e20812;
+}

@@ -1,0 +1,75 @@
+
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card  border-primary" >
+  <div class="card-header" style="text-align: left;"> <img src="assets/img/return.png"   routerLink="productos" width="25px;" style="cursor: pointer;" title="Regresar"  (click)="regresar()"> <label> {{ titulo }}</label></div>
+  <div class="card-body">
+
+    <form #notificaForm="ngForm">
+      <div class="form-group row">
+        <label for="sku" class="col-form-label col-sm-2">SKU</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="productoModel.sku" name="sku"
+           autocomplete="off" #sku="ngModel"
+           required disabled="{{isDetails}}" minlength="6" placeholder="sku" >
+          <div class="alert alert-danger" *ngIf="sku.invalid && (sku.dirty || sku.touched)" >
+            <div *ngIf="sku.errors.required">
+              SKU es requerido
+            </div>
+            <div *ngIf="sku.errors.minlength">
+              SKU debe tener al menos 8 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="descripcion" class="col-form-label col-sm-2">Descripcion</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="productoModel.descripcion"
+           disabled="{{isDetails}}" name="descripcion" autocomplete="off" #descripcion="ngModel"
+            placeholder="Descripcion" required>  <!-- required -->
+          <div class="alert alert-danger" *ngIf="descripcion.invalid &&
+           (descripcion.dirty || descripcion.touched)">
+            <div *ngIf="descripcion.errors.required">
+              Descripcion es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="precio" class="col-form-label col-sm-2">Precio</label>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="productoModel.precio"
+           disabled="{{isDetails}}" name="precio" autocomplete="off" #precio="ngModel"
+            placeholder="Precio" required>  <!-- required -->
+          <div class="alert alert-danger" *ngIf="precio.invalid &&
+           (precio.dirty || precio.touched)">
+            <div *ngIf="precio.errors.required">
+              Precio es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button class="btn btn-primary" role="button" (click)='create()' *ngIf="!productoModel.id else elseBlock" [disabled]="!notificaForm.form.valid">Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-primary" role="button" *ngIf="!isDetails" (click)='update()' [disabled]="!notificaForm.form.valid">Editar</button>
+          </ng-template>
+
+
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]=""></ngx-loading>

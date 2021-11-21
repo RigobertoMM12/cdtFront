@@ -1,0 +1,68 @@
+<div class="card border-primary mb-3">
+
+  <div class="card-body text-primary">
+
+    <div class="my-2 text-left">
+      <form action="index.html" method="post">
+
+        <h1>Cotizador</h1>
+
+        <fieldset>
+          <legend><span class="number">1</span>Selecciona Producto</legend>
+          <label for="tipoCotizacion">Tipo de busqueda:</label>
+          <select id="tipoCotizacion" name="tipoCotizacion" [(ngModel)]="tipoCotizacion">
+            <option *ngFor="let dato of tipoCotizaciones" value="{{dato.id}}"> {{dato.descripcion}}</option>
+          </select>
+
+          <label for="sku" *ngIf="tipoCotizacion==1">SKU:</label>
+          <input type="number" id="sku" name="sku" placeholder="Ingresa el SKU" [(ngModel)]="skuSelect"  *ngIf="tipoCotizacion==1">
+
+          <label for="descripcion" *ngIf="tipoCotizacion==2">Descripcion:</label>
+          <input type="text" id="descripcion" name="descripcion"  [(ngModel)]="descSelec" placeholder="Ingresa  la descripcion" *ngIf="tipoCotizacion==2">
+          <button type="button" (click)="buscarPlazos()">Buscar</button>
+
+        </fieldset>
+
+        <fieldset *ngIf="showThwo">
+
+          <legend><span class="number">2</span>Seleciona el plazo</legend>
+          <label>Plazos:</label>
+          <div *ngFor="let item of listaPlazos">
+            <input type="radio" id="under_{{item.id}}" value="{{item.id}}" name="plazo" (click)="selectPlazo(item.id)"
+             [(ngModel)]="idPlazoSelect">
+            <label for="under_{{item.id}}" class="light">Plazo {{item.numPlazo}}</label><br>
+          </div>
+        </fieldset>
+        <fieldset *ngIf="showThwo">
+          <legend><span class="number">3</span>Detalles de cotizacion</legend>
+          <label for="sku_select" >SKU:</label>
+          <input type="number" id="sku_select" name="sku_select" [(ngModel)]="productoSelect.sku" disabled placeholder="SKU Seleccionado">
+
+          <label for="descripcion_select" >Descripcion:</label>
+          <input type="text" id="descripcion_select" name="descripcion_select"  [(ngModel)]="productoSelect.descripcion" disabled placeholder="Descripcion Seleccionado">
+
+          <label for="plazo_selec" >Plazo:</label>
+          <input type="text" id="plazo_selec" name="plazo_selec"  [(ngModel)]="plazoSelect.numPlazo"
+           disabled placeholder="Plazo Seleccionado">
+
+          <label for="precio_selec" >Precio:</label>
+          <input type="text" id="precio_selec" name="precio_selec"  [(ngModel)]="productoSelect.precio"
+           disabled placeholder="Precio Seleccionado">
+
+          <label for="abonoNormal" >Abono Normal:</label>
+          <input type="number" id="abonoNormal" name="abonoNormal" [(ngModel)]="tasaNormal" disabled placeholder="Abono Normal">
+
+          <label for="abonoPuntual" >Abono Puntual:</label>
+          <input type="number" id="abonoPuntual" name="abonoPuntual" [(ngModel)]="tasaPuntual" disabled placeholder="Abono Puntual">
+
+
+        </fieldset>
+        <button type="button" (click)="generarCotizacion()"  *ngIf="showThwo">Gernerar Cotizacion</button>
+      </form>
+    </div>
+
+
+  </div>
+</div>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]=""></ngx-loading>
